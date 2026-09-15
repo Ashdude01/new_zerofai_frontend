@@ -332,7 +332,7 @@ export function ContactChatBot() {
       const firstName = formDataRef.current.name.split(" ")[0] || "there";
       await addBotMessages([
         `Got it, ${firstName}!`,
-        "How can we help you strengthen your security posture?",
+        "What IT challenges are you looking to solve?",
       ]);
       return;
     }
