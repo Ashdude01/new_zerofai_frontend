@@ -8,6 +8,7 @@ import type {
   LeadershipPageContent,
   NavLink,
   NavigationContent,
+  NewsroomPageContent,
   PageHero,
   TeamMember,
 } from "@/types/site-content";
@@ -21,6 +22,7 @@ import {
   knowledgePageDefaults,
   leadershipPageDefaults,
   navigationDefaults,
+  newsroomPageDefaults,
 } from "@/lib/site-defaults";
 import { unstable_cache } from "next/cache";
 import { cache } from "react";
@@ -237,6 +239,15 @@ function mapBlogPageFromCms(data: Record<string, unknown>): BlogPageContent {
   };
 }
 
+function mapNewsroomPageFromCms(data: Record<string, unknown>): NewsroomPageContent {
+  const hero = (data.hero ?? {}) as Record<string, unknown>;
+  const meta = (data.meta ?? {}) as Record<string, unknown>;
+  return {
+    meta: mapPageSeo(meta, newsroomPageDefaults.meta),
+    hero: mapHero(hero, newsroomPageDefaults.hero),
+  };
+}
+
 /**
  * Each CMS global is cached across requests for 60s (unstable_cache) and
  * deduped within a single request (React cache()). This removes the Postgres
@@ -341,6 +352,24 @@ const fetchBlogPageContent = unstable_cache(
 );
 
 export const getBlogPageContent = cache(async (): Promise<BlogPageContent> => fetchBlogPageContent());
+
+const fetchNewsroomPageContent = unstable_cache(
+  async (): Promise<NewsroomPageContent> => {
+    try {
+      const payload = await getPayloadClient();
+      const data = await payload.findGlobal({ slug: "newsroom-page", depth: 2 });
+      return mapNewsroomPageFromCms(data as Record<string, unknown>);
+    } catch {
+      return newsroomPageDefaults;
+    }
+  },
+  ["newsroom-page-global"],
+  { revalidate: 60, tags: ["newsroom-page"] },
+);
+
+export const getNewsroomPageContent = cache(
+  async (): Promise<NewsroomPageContent> => fetchNewsroomPageContent(),
+);
 
 export function buildMapEmbedUrl(address: string): string {
   return `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;

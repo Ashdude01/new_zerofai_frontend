@@ -311,6 +311,27 @@ export const BlogPage: GlobalConfig = {
   ],
 };
 
+export const NewsroomPage: GlobalConfig = {
+  slug: "newsroom-page",
+  label: "Newsroom Page",
+  access: { read: () => true },
+  fields: [
+    {
+      type: "tabs",
+      tabs: [
+        {
+          label: "Hero",
+          fields: [{ name: "hero", type: "group", fields: pageHeroFields }],
+        },
+        {
+          label: "SEO / Metadata",
+          fields: pageMetaGroupFields,
+        },
+      ],
+    },
+  ],
+};
+
 export const SiteGlobals = [
   SiteNavigation,
   SiteFooter,
@@ -318,4 +339,5 @@ export const SiteGlobals = [
   LeadershipPage,
   KnowledgePage,
   BlogPage,
+  NewsroomPage,
 ];

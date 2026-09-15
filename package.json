@@ -18,6 +18,7 @@
     "migrate:nav-show-on-homepage": "node scripts/apply-nav-show-on-homepage-migration.mjs",
     "migrate:hero-mobile-video": "node scripts/apply-hero-mobile-video-migration.mjs",
     "migrate:hero-images": "node scripts/apply-hero-images-migration.mjs",
+    "migrate:newsroom": "node scripts/apply-newsroom-migration.mjs",
     "build:prod": "node scripts/migrate-production.mjs && next build",
     "migrate:status": "payload migrate:status",
     "start:app": "next start",

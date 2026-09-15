@@ -273,6 +273,89 @@ const Posts: CollectionConfig = {
   },
 };
 
+const News: CollectionConfig = {
+  slug: "news",
+  labels: {
+    singular: "News",
+    plural: "Newsroom",
+  },
+  admin: {
+    useAsTitle: "title",
+    defaultColumns: ["title", "slug", "_status", "updatedAt"],
+    group: "Content",
+  },
+  access: {
+    read: ({ req }) => {
+      if (req.user) return true;
+      return { _status: { equals: "published" } };
+    },
+  },
+  fields: [
+    {
+      name: "title",
+      type: "text",
+      required: true,
+    },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      admin: {
+        position: "sidebar",
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, siblingData }) => {
+            if (value) return value;
+            if (typeof siblingData?.title === "string") return slugify(siblingData.title);
+            return value;
+          },
+        ],
+      },
+    },
+    {
+      name: "excerpt",
+      type: "textarea",
+    },
+    {
+      name: "heroImage",
+      type: "upload",
+      relationTo: "media",
+      label: "Thumbnail / hero image",
+    },
+    {
+      name: "content",
+      type: "richText",
+      editor: articleEditor,
+      required: true,
+    },
+    {
+      name: "publishedAt",
+      type: "date",
+      admin: {
+        position: "sidebar",
+        date: {
+          pickerAppearance: "dayAndTime",
+        },
+      },
+    },
+    {
+      name: "meta",
+      type: "group",
+      fields: [
+        { name: "title", type: "text" },
+        { name: "description", type: "textarea" },
+        { name: "image", type: "upload", relationTo: "media" },
+      ],
+    },
+  ],
+  versions: {
+    drafts: true,
+  },
+};
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -280,7 +363,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname, "src/app/(payload)"),
     },
   },
-  collections: [Users, Media, Posts],
+  collections: [Users, Media, Posts, News],
   globals: [Homepage, ...SiteGlobals],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",

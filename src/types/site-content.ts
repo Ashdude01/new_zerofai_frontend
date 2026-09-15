@@ -83,3 +83,8 @@ export type BlogPageContent = {
   meta: PageSeo;
   hero: PageHero;
 };
+
+export type NewsroomPageContent = {
+  meta: PageSeo;
+  hero: PageHero;
+};

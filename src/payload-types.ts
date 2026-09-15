@@ -33,3 +33,21 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface News {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  heroImage?: number | Media | null;
+  content?: SerializedEditorState | null;
+  publishedAt?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: number | Media | null;
+  } | null;
+  _status?: "draft" | "published" | null;
+  createdAt: string;
+  updatedAt: string;
+}

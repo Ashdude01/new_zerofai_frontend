@@ -5,6 +5,7 @@ import type {
   KnowledgePageContent,
   LeadershipPageContent,
   NavigationContent,
+  NewsroomPageContent,
 } from "@/types/site-content";
 
 const HERO_IMAGE =
@@ -19,6 +20,7 @@ export const navigationDefaults: NavigationContent = {
   ],
   routeLinks: [
     { label: "Our Team", href: "/our-team", type: "route", showOnHomepage: true },
+    { label: "Newsroom", href: "/newsroom", type: "route", showOnHomepage: true },
     { label: "Knowledge", href: "/knowledge", type: "route", showOnHomepage: true },
     { label: "Contact us", href: "/contact", type: "route", showOnHomepage: true },
   ],
@@ -34,6 +36,7 @@ export const footerDefaults: FooterContent = {
       links: [
         { label: "Our Team", href: "/our-team" },
         { label: "Blogs", href: "/blog" },
+        { label: "Newsroom", href: "/newsroom" },
         { label: "Knowledge Center", href: "/knowledge" },
         { label: "Customer Stories", href: "#" },
       ],
@@ -207,6 +210,19 @@ export const blogPageDefaults: BlogPageContent = {
   hero: {
     eyebrow: "Insights",
     title: "Blog",
+    imageUrl: "/assets/blog.webp",
+  },
+};
+
+export const newsroomPageDefaults: NewsroomPageContent = {
+  meta: {
+    title: "Newsroom | ZerofAI",
+    description:
+      "Company news, announcements, and updates from ZerofAI.",
+  },
+  hero: {
+    eyebrow: "Company News",
+    title: "Newsroom",
     imageUrl: "/assets/blog.webp",
   },
 };
