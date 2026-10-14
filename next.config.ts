@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
       "recharts",
     ],
   },
+  reactStrictMode: false,
   poweredByHeader: false,
   compress: true,
   images: {
